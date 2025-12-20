@@ -4,7 +4,7 @@ import { generateAssistantResponse } from '../services/geminiService';
 
 const Contact: React.FC = () => {
   const [prompt, setPrompt] = useState('');
-  const [messages, setMessages] = useState([{ role: 'model', text: 'Bonjour ! Je suis l\'intelligence SWS. Posez-moi vos questions sur nos tarifs, nos trajets ou nos solutions IA.' }]);
+  const [messages, setMessages] = useState([{ role: 'model', text: 'Bonjour ! Je suis l\'intelligence SkyWay Technologies. Posez-moi vos questions sur nos tarifs, nos trajets ou nos solutions IA.' }]);
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -42,7 +42,7 @@ const Contact: React.FC = () => {
               <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 flex flex-col gap-2 shadow-sm hover:border-[#318ce7]/30 transition-all">
                 <Mail className="w-5 h-5 text-orange-500" />
                 <h4 className="font-black text-sm text-[#318ce7]">Email Pro</h4>
-                <p className="text-sm font-bold text-slate-600">contact@sws-group.com</p>
+                <p className="text-sm font-bold text-slate-600">contact@SkyWay Technologies-group.com</p>
               </div>
             </div>
 
@@ -66,7 +66,7 @@ const Contact: React.FC = () => {
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-black text-white text-sm">Assistant SWS IA</h4>
+                  <h4 className="font-black text-white text-sm">Assistant SkyWay Technologies IA</h4>
                   <p className="text-[10px] text-blue-300 font-bold uppercase tracking-widest">En ligne</p>
                 </div>
               </div>

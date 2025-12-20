@@ -90,7 +90,7 @@ const TransportPage: React.FC = () => {
                   {/* Badges Flottants */}
                   <div className="absolute top-10 left-10 bg-white/90 backdrop-blur-sm p-3 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-2 animate-bounce cursor-default">
                     <Box className="w-5 h-5 text-orange-500" />
-                    <span className="text-[10px] font-black text-[#318ce7]">SWS Express</span>
+                    <span className="text-[10px] font-black text-[#318ce7]">SkyWay Technologies Express</span>
                   </div>
 
                   <div className="absolute bottom-8 left-8 right-8 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-2xl border border-slate-100 flex items-center gap-4">
@@ -99,7 +99,7 @@ const TransportPage: React.FC = () => {
                     </div>
                     <div>
                       <p className="text-[9px] text-slate-400 font-black uppercase tracking-widest leading-none mb-1">Position Actuelle</p>
-                      <p className="text-[#318ce7] font-black text-sm">Hub Logistique SWS</p>
+                      <p className="text-[#318ce7] font-black text-sm">Hub Logistique SkyWay Technologies</p>
                     </div>
                   </div>
                 </div>
@@ -160,7 +160,7 @@ const TransportPage: React.FC = () => {
               <div className="space-y-4">
                 {[
                   { icon: Phone, val: '+225 05 44 98 39 93' },
-                  { icon: Mail, val: 'contact@sws-group.com' }
+                  { icon: Mail, val: 'contact@SkyWay Technologies-group.com' }
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-4 group cursor-pointer">
                     <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20 group-hover:bg-white transition-all duration-300">
@@ -179,7 +179,7 @@ const TransportPage: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <label className="text-[10px] font-black uppercase text-slate-400 ml-2">Entreprise</label>
-                    <input type="text" placeholder="SWS Solutions" className="w-full px-5 py-3.5 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-[#318ce7] focus:bg-white outline-none font-bold text-xs transition-all" />
+                    <input type="text" placeholder="SkyWay Technologies Solutions" className="w-full px-5 py-3.5 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-[#318ce7] focus:bg-white outline-none font-bold text-xs transition-all" />
                   </div>
                   <div className="space-y-1">
                     <label className="text-[10px] font-black uppercase text-slate-400 ml-2">Email</label>

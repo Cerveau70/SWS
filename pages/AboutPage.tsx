@@ -1,7 +1,15 @@
-import React from 'react';
-import { Award, Target, Users, Lightbulb, CheckCircle, Rocket, ShieldCheck, BarChart, Star, Activity, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Award, Target, Users, Lightbulb, CheckCircle, Rocket, ShieldCheck, BarChart, Star, Activity, ChevronRight, Plus, Shield } from 'lucide-react';
 
 const AboutPage: React.FC = () => {
+  const [partners, setPartners] = useState<Array<{ id: string; name: string; logo: string; description: string }>>([]);
+
+  useEffect(() => {
+    const savedPartners = localStorage.getItem('sws_partners');
+    if (savedPartners) {
+      setPartners(JSON.parse(savedPartners));
+    }
+  }, []);
   return (
     <main className="min-h-screen bg-white font-sans text-slate-800">
       
@@ -20,14 +28,14 @@ const AboutPage: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-[#318ce7] text-[10px] font-black uppercase border border-blue-100">
-                <Activity className="w-3 h-3 text-orange-500" /> Innovation SWS
+                <Activity className="w-3 h-3 text-orange-500" /> Innovation SkyWay Technologies
               </div>
               <h1 className="text-5xl lg:text-7xl font-black text-[#318ce7] leading-tight">
                 L'intelligence <br />
                 <span className="text-orange-500">en partage.</span>
               </h1>
               <p className="text-lg text-slate-600 font-medium leading-relaxed max-w-xl">
-                SWS est née d'une vision : supprimer la barrière entre le transport physique et l'analyse de données. Nous construisons le futur de la logistique, un algorithme à la fois.
+                SkyWay Technologies est née d'une vision : supprimer la barrière entre le transport physique et l'analyse de données. Nous construisons le futur de la logistique, un algorithme à la fois.
               </p>
               <div className="flex gap-4">
                 <div className="px-5 py-4 bg-slate-50 border-l-4 border-orange-500 rounded-r-2xl shadow-sm">
@@ -113,6 +121,54 @@ const AboutPage: React.FC = () => {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* --- PARTENAIRES SECTION --- */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-between mb-12">
+            <div>
+              <h2 className="text-3xl font-black text-[#318ce7] mb-2">Nos Partenaires</h2>
+              <p className="text-gray-600 font-medium">Les acteurs clés de notre écosystème</p>
+            </div>
+            <a
+              href="/admin/login"
+              className="flex items-center gap-2 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-orange-500/20"
+            >
+              <Plus className="w-5 h-5" />
+              Ajouter
+            </a>
+          </div>
+
+          {partners.length === 0 ? (
+            <div className="text-center py-20 bg-slate-50 rounded-3xl border border-slate-200">
+              <Users className="w-16 h-16 text-gray-300 mx-auto mb-6" />
+              <p className="text-gray-500 text-lg mb-6 font-medium max-w-lg mx-auto">
+                Aucun partenaire pour le moment. Connectez-vous à l'espace admin pour en ajouter.
+              </p>
+              <a
+                href="/admin/login"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-[#318ce7] hover:bg-[#2671ba] text-white font-bold rounded-xl transition-all"
+              >
+                <Shield className="w-5 h-5" />
+                Aller à l'Admin
+              </a>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {partners.map((partner) => (
+                <div
+                  key={partner.id}
+                  className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-[#318ce7] transition-all group"
+                >
+                  <div className="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">{partner.logo}</div>
+                  <h3 className="text-xl font-bold text-[#318ce7] mb-3 group-hover:text-orange-500 transition-colors">{partner.name}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{partner.description}</p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </main>

@@ -41,7 +41,7 @@ const ContactPage: React.FC = () => {
             <div className="lg:col-span-5 space-y-4">
               {[
                 { icon: Phone, title: 'Téléphone', val: '+225 05 44 98 39 93' },
-                { icon: Mail, title: 'Email Expert', val: 'contact@sws-group.com' },
+                { icon: Mail, title: 'Email Expert', val: 'contact@SkyWay Technologies-group.com' },
                 { icon: MapPin, title: 'Siège Social', val: 'Abidjan, Côte d\'Ivoire' },
               ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-5 p-5 bg-white rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/40 hover:border-[#318ce750] transition-all">
@@ -57,7 +57,7 @@ const ContactPage: React.FC = () => {
               
               <div className="p-6 bg-[#318ce7] rounded-2xl text-white shadow-xl shadow-blue-200 relative overflow-hidden group">
                 <Linkedin className="absolute -right-4 -bottom-4 w-24 h-24 text-white/10 group-hover:scale-110 transition-transform" />
-                <h4 className="font-bold mb-2 flex items-center gap-2">SWS sur LinkedIn</h4>
+                <h4 className="font-bold mb-2 flex items-center gap-2">SkyWay Technologies sur LinkedIn</h4>
                 <p className="text-xs text-blue-50 leading-relaxed max-w-[200px]">Rejoignez notre réseau pour suivre les innovations logistiques.</p>
               </div>
             </div>

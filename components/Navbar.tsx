@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, Truck, BrainCircuit, Home, Database, Info, Mail, ChevronRight } from 'lucide-react';
+import { Menu, X, Truck, BrainCircuit, Home, Database, Info, Mail, ChevronRight, Shield } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
@@ -11,6 +11,7 @@ const Navbar: React.FC = () => {
     { name: 'Expertise Transport', to: '/transport', Icon: Truck },
     { name: 'Solutions Data & IA', to: '/data', Icon: Database },
     { name: 'À Propos', to: '/about', Icon: Info },
+    { name: 'Admin', to: '/admin/login', Icon: Shield },
   ];
 
   return (
@@ -30,7 +31,7 @@ const Navbar: React.FC = () => {
               </div>
             </div>
             <div className="flex flex-col">
-              <span className="font-black text-2xl tracking-tighter leading-none">SWS</span>
+              <span className="font-black text-2xl tracking-tighter leading-none">SkyWay Technologies</span>
               <span className="text-[10px] uppercase tracking-[0.2em] text-orange-400 font-bold">Solutions</span>
             </div>
           </div>

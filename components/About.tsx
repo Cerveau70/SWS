@@ -12,7 +12,7 @@ const About: React.FC = () => {
             <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white">
               <img 
                 src="https://picsum.photos/800/600?image=1033" 
-                alt="Equipe SWS" 
+                alt="Equipe SkyWay Technologies" 
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#003366]/80 to-transparent flex items-end p-8">
@@ -22,10 +22,10 @@ const About: React.FC = () => {
           </div>
 
           <div>
-            <h2 className="text-orange-500 font-black uppercase text-xs tracking-widest mb-4">À Propos de SWS</h2>
+            <h2 className="text-orange-500 font-black uppercase text-xs tracking-widest mb-4">À Propos de SkyWay Technologies</h2>
             <h3 className="text-4xl font-black text-[#318ce7] mb-6 leading-tight">Plus qu'un prestataire, un partenaire de croissance.</h3>
             <p className="text-slate-600 mb-8 text-lg font-medium leading-relaxed">
-              SWS fusionne deux mondes : le transport physique et l'intelligence des données. 
+              SkyWay Technologies fusionne deux mondes : le transport physique et l'intelligence des données. 
               Nos ingénieurs IA collaborent avec nos experts logistiques pour offrir des solutions fluides, économiques et prédictives.
             </p>
 

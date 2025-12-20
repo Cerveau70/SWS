@@ -14,7 +14,7 @@ export const generateAssistantResponse = async (userPrompt: string): Promise<str
       model: 'gemini-2.5-flash',
       contents: userPrompt,
       config: {
-        systemInstruction: `Tu es l'assistant virtuel intelligent de SWS (Smart World Solutions). 
+        systemInstruction: `Tu es l'assistant virtuel intelligent de SkyWay Technologies (Smart World Solutions). 
         L'entreprise a deux pôles d'expertise : 
         1. Transport & Logistique (Flotte internationale, dernier kilomètre, frêt sécurisé).
         2. Informatique & Data/IA (Analyse prédictive, développement d'IA sur mesure, cybersécurité).

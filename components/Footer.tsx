@@ -16,7 +16,7 @@ const Footer: React.FC = () => {
                   </div>
                 </div>
                 <div>
-                  <span className="font-black text-2xl text-[#318ce7] tracking-tighter">SWS</span>
+                  <span className="font-black text-2xl text-[#318ce7] tracking-tighter">SkyWay Technologies</span>
                   <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Smart World Solutions</div>
                 </div>
               </div>

@@ -79,7 +79,7 @@ const Hero: React.FC = () => {
             </h1>
 
             <p className="text-lg lg:text-xl text-slate-300 max-w-lg leading-relaxed font-medium">
-              SWS synchronise votre <span className="text-white font-bold">logistique réelle</span> avec la puissance de l'<span className="text-[#318ce7] font-bold">Intelligence Artificielle</span>.
+              SkyWay Technologies synchronise votre <span className="text-white font-bold">logistique réelle</span> avec la puissance de l'<span className="text-[#318ce7] font-bold">Intelligence Artificielle</span>.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-5 pt-4">
