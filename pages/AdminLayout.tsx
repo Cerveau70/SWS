@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { LogOut, Plus, X, Edit2, Trash2, Save, Truck, BrainCircuit, Users, Settings, BarChart3 } from 'lucide-react';
 
 interface Partner {
@@ -11,7 +11,6 @@ interface Partner {
 
 const AdminLayout: React.FC = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [partners, setPartners] = useState<Partner[]>([]);
   const [isAddingPartner, setIsAddingPartner] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -85,74 +84,81 @@ const AdminLayout: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex">
-      {/* --- SIDEBAR --- */}
-      <div className="hidden md:flex flex-col w-72 bg-[#318ce7] text-white shadow-2xl">
-        {/* Logo */}
-        <div className="p-6 border-b border-white/10">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="bg-orange-500 p-2 rounded-lg">
-              <div className="flex gap-1">
-                <Truck className="w-4 h-4 text-white" />
-                <BrainCircuit className="w-4 h-4 text-white" />
+    <div className="min-h-screen bg-slate-50 flex flex-col">
+      {/* --- ADMIN HEADER --- */}
+      <nav className="fixed w-full z-50 bg-[#318ce7]/90 backdrop-blur-md text-white shadow-2xl border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo */}
+            <div className="flex-shrink-0 flex items-center gap-3 cursor-pointer group" onClick={() => navigate('/admin/dashboard')}>
+              <div className="bg-gradient-to-br from-orange-400 to-orange-600 p-2 rounded-xl shadow-lg shadow-orange-500/20 group-hover:scale-110 transition-transform duration-300">
+                <div className="flex gap-1">
+                  <Truck className="w-5 h-5 text-white" />
+                  <BrainCircuit className="w-5 h-5 text-white" />
+                </div>
+              </div>
+              <div className="flex flex-col">
+                <span className="font-black text-2xl tracking-tighter leading-none">Admin Panel</span>
+                <span className="text-[10px] uppercase tracking-[0.2em] text-orange-400 font-bold">Smart World Solutions</span>
               </div>
             </div>
-            <span className="font-black text-lg tracking-tight">Admin Panel</span>
+
+            {/* Navigation Tabs */}
+            <div className="hidden md:flex items-center space-x-1">
+              <button
+                onClick={() => setActiveTab('partners')}
+                className={`relative px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2.5 transition-all duration-300 group
+                  ${activeTab === 'partners' ? 'text-orange-400' : 'text-blue-100 hover:text-white hover:bg-white/5'}`}
+              >
+                <Users className="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity" />
+                <span>Partenaires</span>
+              </button>
+              <button
+                onClick={() => setActiveTab('settings')}
+                className={`relative px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2.5 transition-all duration-300 group
+                  ${activeTab === 'settings' ? 'text-orange-400' : 'text-blue-100 hover:text-white hover:bg-white/5'}`}
+              >
+                <Settings className="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity" />
+                <span>Paramètres</span>
+              </button>
+            </div>
+
+            {/* Logout Button */}
+            <button
+              onClick={handleLogout}
+              className="group bg-red-500 hover:bg-red-600 text-white px-6 py-2.5 rounded-full font-bold transition-all shadow-lg shadow-red-500/20 flex items-center gap-2"
+            >
+              <LogOut className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              Déconnexion
+            </button>
           </div>
-          <p className="text-xs text-blue-100">Smart World Solutions</p>
         </div>
-
-        {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-2">
-          <button
-            onClick={() => setActiveTab('partners')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-all ${
-              activeTab === 'partners'
-                ? 'bg-white/20 text-white'
-                : 'text-blue-100 hover:bg-white/10'
-            }`}
-          >
-            <Users className="w-5 h-5" />
-            Partenaires
-          </button>
-          <button
-            onClick={() => setActiveTab('settings')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-all ${
-              activeTab === 'settings'
-                ? 'bg-white/20 text-white'
-                : 'text-blue-100 hover:bg-white/10'
-            }`}
-          >
-            <Settings className="w-5 h-5" />
-            Paramètres
-          </button>
-        </nav>
-
-        {/* Logout Button */}
-        <div className="p-4 border-t border-white/10">
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2.5 rounded-lg font-bold transition-colors"
-          >
-            <LogOut className="w-4 h-4" />
-            Déconnexion
-          </button>
-        </div>
-      </div>
+      </nav>
 
       {/* --- MAIN CONTENT --- */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Top Bar for Mobile */}
-        <div className="md:hidden bg-[#318ce7] text-white p-4 flex items-center justify-between">
+      <div className="flex-1 flex flex-col overflow-hidden pt-20">
+        {/* Mobile Navigation */}
+        <div className="md:hidden bg-[#318ce7]/95 text-white border-b border-white/10">
           <div className="flex items-center gap-2">
-            <div className="bg-orange-500 p-1.5 rounded">
-              <Truck className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-black">Admin Panel</span>
+            <button
+              onClick={() => setActiveTab('partners')}
+              className={`flex-1 px-4 py-3 text-sm font-bold flex items-center justify-center gap-2 transition-all ${
+                activeTab === 'partners' ? 'bg-white/20 text-orange-400' : 'text-blue-100 hover:bg-white/10'
+              }`}
+            >
+              <Users className="w-4 h-4" />
+              Partenaires
+            </button>
+            <button
+              onClick={() => setActiveTab('settings')}
+              className={`flex-1 px-4 py-3 text-sm font-bold flex items-center justify-center gap-2 transition-all ${
+                activeTab === 'settings' ? 'bg-white/20 text-orange-400' : 'text-blue-100 hover:bg-white/10'
+              }`}
+            >
+              <Settings className="w-4 h-4" />
+              Paramètres
+            </button>
           </div>
-          <button onClick={handleLogout} className="p-2 hover:bg-white/10 rounded-lg">
-            <LogOut className="w-5 h-5" />
-          </button>
         </div>
 
         {/* Content */}
