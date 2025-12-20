@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
-import { Menu, X, Truck, BrainCircuit } from 'lucide-react';
+import { Menu, X, Truck, BrainCircuit, Home, Database, Info, Mail } from 'lucide-react';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
+  const navigate = useNavigate();
+
   const navLinks = [
-    { name: 'Accueil', href: '#hero' },
-    { name: 'Expertise Transport', href: '#transport' },
-    { name: 'Solutions Data & IA', href: '#data' },
-    { name: 'À Propos', href: '#about' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Accueil', to: '/', Icon: Home },
+    { name: 'Expertise Transport', to: '/transport', Icon: Truck },
+    { name: 'Solutions Data & IA', to: '/data', Icon: Database },
+    { name: 'À Propos', to: '/about', Icon: Info },
+    { name: 'Contact', to: '/contact', Icon: Mail },
   ];
+
 
   return (
     <nav className="fixed w-full z-50 bg-sws-blue/95 backdrop-blur-sm text-white shadow-lg border-b border-white/10">
@@ -33,20 +37,25 @@ const Navbar: React.FC = () => {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
               {navLinks.map((link) => (
-                <a
+                <NavLink
                   key={link.name}
-                  href={link.href}
-                  className="hover:text-sws-orange transition-colors duration-300 px-3 py-2 rounded-md text-sm font-medium"
+                  to={link.to}
+                  onClick={() => setIsOpen(false)}
+                  className={({ isActive }) =>
+                    `transition-colors duration-300 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 ${isActive ? 'text-sws-orange' : 'hover:text-sws-orange'}`
+                  }
                 >
-                  {link.name}
-                </a>
+                  <link.Icon className="w-4 h-4 opacity-90" />
+                  <span>{link.name}</span>
+                </NavLink>
               ))}
-              <a 
-                href="#contact"
-                className="bg-sws-orange hover:bg-sws-orangeDark text-white px-5 py-2 rounded-full font-semibold transition-all shadow-md transform hover:scale-105"
+              <NavLink
+                to="/contact"
+                onClick={() => setIsOpen(false)}
+                className={({ isActive }) => `bg-sws-orange hover:bg-sws-orangeDark text-white px-5 py-2 rounded-full font-semibold transition-all shadow-md transform hover:scale-105 ${isActive ? 'ring-2 ring-white/20' : ''}`}
               >
                 Devis Gratuit
-              </a>
+              </NavLink>
             </div>
           </div>
 
@@ -69,14 +78,15 @@ const Navbar: React.FC = () => {
         <div className="md:hidden bg-sws-blueLight border-t border-gray-700">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navLinks.map((link) => (
-              <a
+              <NavLink
                 key={link.name}
-                href={link.href}
+                to={link.to}
                 onClick={() => setIsOpen(false)}
-                className="text-gray-300 hover:text-sws-orange block px-3 py-2 rounded-md text-base font-medium"
+                className={({ isActive }) => `text-gray-300 ${isActive ? 'text-sws-orange' : 'hover:text-sws-orange'} block px-3 py-2 rounded-md text-base font-medium flex items-center gap-2 w-full text-left`}
               >
-                {link.name}
-              </a>
+                <link.Icon className="w-5 h-5" />
+                <span>{link.name}</span>
+              </NavLink>
             ))}
           </div>
         </div>

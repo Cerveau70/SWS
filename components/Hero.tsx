@@ -1,26 +1,86 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { ArrowRight, Box, Cpu } from 'lucide-react';
+import logisImg from '../img/asc.jpg';
+import bigImg from '../img/bigdata.jpg';
+import cardLogis from '../img/logis.jpg';
+import cardBig from '../img/big.png';
+import '/index.css';
+
+const Typewriter: React.FC = () => {
+  const fullText = 'Bougez vos Biens.\nValorisez vos Données.';
+  const [len, setLen] = useState(0);
+  const [phase, setPhase] = useState<'typing'|'pause'|'erasing'>('typing');
+  const timeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
+    if (phase === 'typing') {
+      if (len < fullText.length) {
+        timeoutRef.current = window.setTimeout(() => setLen(l => l + 1), 60);
+      } else {
+        timeoutRef.current = window.setTimeout(() => setPhase('pause'), 900);
+      }
+    } else if (phase === 'pause') {
+      timeoutRef.current = window.setTimeout(() => setPhase('erasing'), 800);
+    } else if (phase === 'erasing') {
+      if (len > 0) {
+        timeoutRef.current = window.setTimeout(() => setLen(l => l - 1), 24);
+      } else {
+        // restart typing
+        timeoutRef.current = window.setTimeout(() => setPhase('typing'), 400);
+      }
+    }
+
+    return () => { if (timeoutRef.current) window.clearTimeout(timeoutRef.current); };
+  }, [len, phase]);
+
+  const displayed = fullText.slice(0, len);
+  const lines = displayed.split('\n');
+
+  return (
+    <>
+      <span className="typewriter-line text-white font-semibold text-4xl lg:text-6xl">
+        {lines[0] || ''}
+      </span>
+      <br />
+      <span className="typewriter-line text-blue-400 font-semibold text-4xl lg:text-6xl">
+        {lines[1] || ''}
+      </span>
+      <span className="typewriter-caret" />
+    </>
+  );
+};
 
 const Hero: React.FC = () => {
+  // no vehicle animation (removed per request)
   return (
-    <div id="hero" className="relative bg-sws-blue min-h-screen flex items-center pt-20 overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-sws-blueLight to-sws-blue opacity-50 z-0"></div>
-      <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-sws-orange rounded-full blur-[128px] opacity-20 z-0"></div>
+    <div id="hero" className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+      {/* Background: base image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center z-0"
+        style={{ backgroundImage: `url(${logisImg})` }}
+      />
+      {/* Overlay image (semi-transparent) */}
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-150 mix-blend-overlay z-20"
+        style={{ backgroundImage: `url(${bigImg})` }}
+      />
+      {/* Background overlay for contrast */}
+      <div className="absolute inset-0 bg-black/30 z-20"></div>
+      <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-sws-orange rounded-full blur-[128px] opacity-20 z-5"></div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-30 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
           {/* Text Content */}
           <div className="text-white space-y-8">
-            <div className="inline-flex items-center space-x-2 bg-white/10 px-4 py-2 rounded-full border border-white/20">
-              <span className="w-2 h-2 rounded-full bg-sws-orange animate-pulse"></span>
-              <span className="text-sm font-medium text-gray-300">L'alliance du physique et du numérique</span>
+            <div className="inline-flex items-center space-x-2 bg-black/30 px-4 py-2 rounded-full border border-white/20 shadow-sm">
+              <span className="w-3 h-3 rounded-full bg-sws-orange animate-pulse" />
+              <span className="text-sm font-mono font-semibold text-green-300 tracking-wide">L'alliance du physique et du numérique</span>
             </div>
 
             <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
-              Bougez vos <span className="text-sws-orange">Biens</span>.<br />
-              Valorisez vos <span className="text-blue-400">Données</span>.
+              <Typewriter />
             </h1>
 
             <p className="text-xl text-white max-w-lg">
@@ -43,7 +103,7 @@ const Hero: React.FC = () => {
             {/* Card 1: Transport */}
             <div className="absolute top-10 left-0 w-72 h-80 bg-slate-800 rounded-2xl p-6 border border-gray-700 shadow-2xl transform -rotate-3 hover:rotate-0 transition-transform duration-500 z-10">
               <div className="h-40 bg-gray-700 rounded-xl mb-4 overflow-hidden relative">
-                <img src="https://picsum.photos/300/200?grayscale" alt="Transport" className="object-cover w-full h-full opacity-80" />
+                <img src={cardLogis} alt="Transport" className="object-cover w-full h-full opacity-80" />
                 <div className="absolute inset-0 bg-sws-orange/20 mix-blend-overlay"></div>
               </div>
               <div className="flex items-center gap-3 mb-2">
@@ -58,7 +118,7 @@ const Hero: React.FC = () => {
             {/* Card 2: AI */}
             <div className="absolute bottom-10 right-0 w-72 h-80 bg-slate-900 rounded-2xl p-6 border border-blue-500/30 shadow-2xl shadow-blue-500/10 transform rotate-3 hover:rotate-0 transition-transform duration-500 z-20">
               <div className="h-40 bg-gray-800 rounded-xl mb-4 overflow-hidden relative">
-                <img src="https://picsum.photos/301/201?blur=2" alt="AI" className="object-cover w-full h-full opacity-80" />
+                <img src={cardBig} alt="AI" className="object-cover w-full h-full opacity-80" />
                 <div className="absolute inset-0 bg-blue-500/20 mix-blend-overlay"></div>
               </div>
               <div className="flex items-center gap-3 mb-2">

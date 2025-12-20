@@ -1,22 +1,40 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
 import About from './components/About';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import TransportPage from './pages/TransportPage';
+import DataPage from './pages/DataPage';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
 
 function App() {
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
-      <main>
-        <Hero />
-        <Services />
-        <About />
-        <Contact />
-      </main>
-      <Footer />
+      <Routes>
+        <Route path="/" element={
+          <main>
+            <Hero />
+            <Services />
+            <About />
+            <Contact />
+          </main>
+        } />
+        <Route path="/transport" element={<TransportPage />} />
+        <Route path="/data" element={<DataPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+      </Routes>
+      {/* Footer only on home */}
+      {/* show Footer only when at root path */}
+      <Routes>
+        <Route path="/" element={<Footer />} />
+      </Routes>
     </div>
   );
 }
