@@ -1,5 +1,6 @@
 import React from 'react';
-import { Truck, BrainCircuit, Linkedin, Twitter, Facebook, MessageSquare } from 'lucide-react';
+import { Truck, BrainCircuit, Linkedin, Twitter, Facebook, MessageSquare, Lock } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer: React.FC = () => {
   return (
@@ -53,10 +54,18 @@ const Footer: React.FC = () => {
         </div>
       </footer>
 
-      {/* Floating Action Button */}
-      <a href="#contact" className="fixed left-8 bottom-8 z-50 bg-orange-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform shadow-orange-500/40">
-        <MessageSquare className="w-6 h-6" />
-      </a>
+      {/* Floating Action Buttons */}
+      <div className="fixed left-8 bottom-8 z-50 flex flex-col gap-4">
+        {/* Contact Button */}
+        <a href="#contact" className="bg-orange-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform shadow-orange-500/40">
+          <MessageSquare className="w-6 h-6" />
+        </a>
+        
+        {/* Admin Button - Discret */}
+        <Link to="/admin/login" className="bg-slate-600 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform shadow-slate-700/40 hover:bg-slate-700" title="Espace Admin">
+          <Lock className="w-6 h-6" />
+        </Link>
+      </div>
     </>
   );
 };

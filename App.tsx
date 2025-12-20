@@ -11,7 +11,7 @@ import DataPage from './pages/DataPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import AdminLogin from './pages/AdminLogin';
-import AdminDashboard from './pages/AdminDashboard';
+import AdminLayout from './pages/AdminLayout';
 
 function App() {
 
@@ -32,7 +32,7 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/dashboard" element={<AdminLayout />} />
       </Routes>
       {/* Footer only on home */}
       {/* show Footer only when at root path */}

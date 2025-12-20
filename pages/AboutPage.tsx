@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Award, Target, Users, Lightbulb, CheckCircle, Rocket, ShieldCheck, BarChart, Star, Activity, ChevronRight, Plus, Shield } from 'lucide-react';
+import { Award, Target, Users, Lightbulb, CheckCircle, Rocket, ShieldCheck, BarChart, Star, Activity, ChevronRight } from 'lucide-react';
 
 const AboutPage: React.FC = () => {
   const [partners, setPartners] = useState<Array<{ id: string; name: string; logo: string; description: string }>>([]);
@@ -127,33 +127,17 @@ const AboutPage: React.FC = () => {
       {/* --- PARTENAIRES SECTION --- */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-between mb-12">
-            <div>
-              <h2 className="text-3xl font-black text-[#318ce7] mb-2">Nos Partenaires</h2>
-              <p className="text-gray-600 font-medium">Les acteurs clés de notre écosystème</p>
-            </div>
-            <a
-              href="/admin/login"
-              className="flex items-center gap-2 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-orange-500/20"
-            >
-              <Plus className="w-5 h-5" />
-              Ajouter
-            </a>
+          <div className="mb-12">
+            <h2 className="text-3xl font-black text-[#318ce7] mb-2">Nos Partenaires</h2>
+            <p className="text-gray-600 font-medium">Les acteurs clés de notre écosystème</p>
           </div>
 
           {partners.length === 0 ? (
             <div className="text-center py-20 bg-slate-50 rounded-3xl border border-slate-200">
               <Users className="w-16 h-16 text-gray-300 mx-auto mb-6" />
-              <p className="text-gray-500 text-lg mb-6 font-medium max-w-lg mx-auto">
-                Aucun partenaire pour le moment. Connectez-vous à l'espace admin pour en ajouter.
+              <p className="text-gray-500 text-lg font-medium max-w-lg mx-auto">
+                Aucun partenaire pour le moment.
               </p>
-              <a
-                href="/admin/login"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-[#318ce7] hover:bg-[#2671ba] text-white font-bold rounded-xl transition-all"
-              >
-                <Shield className="w-5 h-5" />
-                Aller à l'Admin
-              </a>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
