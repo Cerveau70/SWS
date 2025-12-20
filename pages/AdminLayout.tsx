@@ -29,7 +29,7 @@ const AdminLayout: React.FC = () => {
       navigate('/admin/login');
       return;
     }
-    const savedPartners = localStorage.getItem('sws_partners');
+    const savedPartners = localStorage.getItem('SKT_partners');
     if (savedPartners) setPartners(JSON.parse(savedPartners));
   }, [navigate]);
 
@@ -75,7 +75,7 @@ const AdminLayout: React.FC = () => {
   };
 
   const savePartnersToStorage = (updatedPartners: Partner[]) => {
-    localStorage.setItem('sws_partners', JSON.stringify(updatedPartners));
+    localStorage.setItem('SKT_partners', JSON.stringify(updatedPartners));
   };
 
   const handleLogout = () => {
@@ -114,7 +114,7 @@ const AdminLayout: React.FC = () => {
               <BrainCircuit size={24} />
             </div>
             <div>
-              <h1 className="font-bold text-slate-900 leading-tight">SWS Admin</h1>
+              <h1 className="font-bold text-slate-900 leading-tight">SKT Admin</h1>
               <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Smart Solutions</p>
             </div>
           </div>
@@ -314,7 +314,7 @@ const AdminLayout: React.FC = () => {
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Adresse Email</label>
-                    <p className="text-slate-900 font-semibold text-lg">admin@sws-solutions.com</p>
+                    <p className="text-slate-900 font-semibold text-lg">admin@SKT-solutions.com</p>
                   </div>
                   <div className="pt-4 border-t border-slate-100">
                     <button className="text-[#318ce7] font-bold text-sm hover:underline">Modifier le mot de passe</button>

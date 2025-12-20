@@ -1,15 +1,54 @@
-import React, { useState } from 'react';
-import { Menu, X, Truck, BrainCircuit, Home, Database, Info, Mail, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Menu, X, Truck, BrainCircuit, Home, Database, Info, ChevronRight, Users, Activity } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
+
+// Import Firebase logic
+import { db } from '../services/firebase';
+import { doc, updateDoc, increment, setDoc, onSnapshot } from 'firebase/firestore';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [totalVisits, setTotalVisits] = useState<number | null>(null);
+  
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  // --- LOGIQUE DE TRACKING & AFFICHAGE ---
+  useEffect(() => {
+    // 1. Fonction pour incrémenter la visite (une seule fois par session)
+    const handleTrackVisit = async () => {
+      const hasVisited = sessionStorage.getItem('SKT_tracked');
+      if (!hasVisited) {
+        const today = new Date().toISOString().split('T')[0];
+        const statsRef = doc(db, "analytics", "overview");
+        const dailyRef = doc(db, "daily_analytics", today);
+
+        try {
+          await updateDoc(statsRef, { totalVisits: increment(1) });
+          await setDoc(dailyRef, { count: increment(1) }, { merge: true });
+        } catch (e) {
+          await setDoc(statsRef, { totalVisits: 1 }, { merge: true });
+          await setDoc(dailyRef, { count: 1 }, { merge: true });
+        }
+        sessionStorage.setItem('SKT_tracked', 'true');
+      }
+    };
+
+    handleTrackVisit();
+
+    // 2. Écouter le nombre de visites en temps réel
+    const unsub = onSnapshot(doc(db, "analytics", "overview"), (snap) => {
+      if (snap.exists()) {
+        setTotalVisits(snap.data().totalVisits);
+      }
+    });
+
+    return () => unsub();
+  }, []);
 
   const navLinks = [
     { name: 'Accueil', to: '/', Icon: Home },
-    { name: 'Expertise Transport', to: '/transport', Icon: Truck },
-    { name: 'Solutions Data & IA', to: '/data', Icon: Database },
+    { name: 'Expertise', to: '/transport', Icon: Truck },
+    { name: 'Solutions', to: '/data', Icon: Database },
     { name: 'À Propos', to: '/about', Icon: Info },
   ];
 
@@ -49,19 +88,33 @@ const Navbar: React.FC = () => {
                 >
                   <link.Icon className="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity" />
                   <span>{link.name}</span>
-                  {/* Barre animée sous l'élément actif */}
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-orange-400 transition-all duration-300 group-[.active]:w-1/2" />
                 </NavLink>
               ))}
             </div>
 
-            <NavLink
-              to="/contact"
-              className="group bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-full font-bold transition-all shadow-lg shadow-orange-500/20 flex items-center gap-2 hover:translate-y-[-2px] active:translate-y-0"
-            >
-              Contact
-              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </NavLink>
+            <div className="flex items-center gap-3">
+                <NavLink
+                to="/contact"
+                className="group bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-full font-bold transition-all shadow-lg shadow-orange-500/20 flex items-center gap-2 hover:translate-y-[-2px] active:translate-y-0"
+                >
+                Contact
+                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </NavLink>
+
+                {/* --- VISITOR COUNTER BADGE --- */}
+                <div className="flex items-center gap-2.5 bg-white/10 backdrop-blur-lg px-4 py-2 rounded-2xl border border-white/10 shadow-inner group cursor-default ml-2">
+                    <div className="relative">
+                        <Users className="w-4 h-4 text-orange-400" />
+                        <span className="absolute -top-1 -right-1 w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse border border-[#318ce7]"></span>
+                    </div>
+                    <div className="flex flex-col leading-none">
+                        <span className="text-[11px] font-black tracking-tighter">
+                            {totalVisits !== null ? totalVisits.toLocaleString() : '...'}
+                        </span>
+                        <span className="text-[7px] uppercase tracking-widest text-blue-200 font-bold">Visiteurs</span>
+                    </div>
+                </div>
+            </div>
           </div>
 
           {/* --- MOBILE BUTTON --- */}
@@ -77,7 +130,7 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* --- MOBILE MENU --- */}
-      <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+      <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
         <div className="px-4 pt-2 pb-6 space-y-2 bg-[#002244] border-t border-white/5 shadow-inner">
           {navLinks.map((link) => (
             <NavLink
@@ -93,13 +146,23 @@ const Navbar: React.FC = () => {
               <span>{link.name}</span>
             </NavLink>
           ))}
+          
+          {/* Mobile Visitor Counter */}
+          <div className="flex items-center justify-between px-4 py-3 bg-white/5 rounded-xl border border-white/5">
+            <div className="flex items-center gap-3">
+                <Users className="w-5 h-5 text-orange-400" />
+                <span className="text-sm font-bold text-blue-100 uppercase tracking-widest">Audience Mondiale</span>
+            </div>
+            <span className="text-lg font-black text-white">{totalVisits || '...'}</span>
+          </div>
+
           <div className="pt-4">
             <NavLink
               to="/contact"
               onClick={() => setIsOpen(false)}
               className="flex items-center justify-center gap-2 w-full bg-orange-500 text-white py-4 rounded-xl font-black shadow-lg shadow-orange-500/20"
             >
-              Devis Gratuit
+              Démarrer un projet
             </NavLink>
           </div>
         </div>

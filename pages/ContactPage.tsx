@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle, Sparkles, Clock, Linkedin, ChevronRight } from 'lucide-react';
+import { 
+  Mail, Phone, MapPin, Send, CheckCircle, 
+  Sparkles, Clock, Linkedin, ChevronRight, 
+  Bus, Database 
+} from 'lucide-react';
 
 const ContactPage: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -7,87 +11,122 @@ const ContactPage: React.FC = () => {
   return (
     <main className="min-h-screen bg-white font-sans text-slate-800">
       
-      {/* --- HERO SECTION AVEC BACKGROUND OFFICE --- */}
+      {/* --- HERO SECTION : VISION MULTISERVICE --- */}
       <section className="relative pt-32 pb-16 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000&auto=format&fit=crop" 
+            src="https://images.unsplash.com/photo-1557426272-fc759fbbad60?q=80&w=2000&auto=format&fit=crop" 
             className="w-full h-full object-cover opacity-5"
-            alt="Office background"
+            alt="City and Tech background"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-white via-white/50 to-white" />
         </div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-[#318ce7] text-[10px] font-black uppercase mb-6 border border-blue-100">
-            <Sparkles className="w-3 h-3 text-orange-500" /> Réponse sous 24h
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-[#318ce7] text-[10px] font-black uppercase mb-6 border border-blue-100 shadow-sm">
+            <Sparkles className="w-3 h-3 text-orange-500" /> Hub Multiservices SkyWay
           </div>
-          <h1 className="text-5xl lg:text-7xl font-black text-[#318ce7] leading-none mb-6">
-            Donnons vie à <br />
-            <span className="text-orange-500 relative">vos projets.</span>
+          <h1 className="text-5xl lg:text-7xl font-black text-[#318ce7] leading-[1.1] mb-6">
+            Bâtissons le futur <br />
+            <span className="text-orange-500 relative">urbain et digital.</span>
           </h1>
-          <p className="text-lg text-slate-600 font-medium max-w-2xl mx-auto">
-            Une question technique ou une demande de devis ? Nos experts sont à votre entière disposition.
+          <p className="text-lg text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed">
+            Partenariat communal pour le transport ou architecture logicielle Big Data ? <br className="hidden md:block"/>
+            Nos pôles d'expertise répondent à vos enjeux stratégiques.
           </p>
         </div>
       </section>
 
-      {/* --- SECTION CONTACT --- */}
+      {/* --- SECTION CONTACT & FORMULAIRE --- */}
       <section className="py-16 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             
-            {/* Infos (Gauche) */}
+            {/* Infos de contact (Gauche) */}
             <div className="lg:col-span-5 space-y-4">
               {[
-                { icon: Phone, title: 'Téléphone', val: '+225 05 44 98 39 93' },
-                { icon: Mail, title: 'Email Expert', val: 'contact@SkyWay Technologies-group.com' },
-                { icon: MapPin, title: 'Siège Social', val: 'Abidjan, Côte d\'Ivoire' },
+                { icon: Phone, title: 'Ligne Directe', val: '+225 05 44 98 39 93' },
+                { icon: Mail, title: 'Email Expertise', val: 'contact@skyway-tech.com' },
+                { icon: MapPin, title: 'Direction Générale', val: 'Abidjan, Côte d\'Ivoire' },
               ].map((item, idx) => (
-                <div key={idx} className="flex items-center gap-5 p-5 bg-white rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/40 hover:border-[#318ce750] transition-all">
-                  <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
-                    <item.icon className="w-5 h-5 text-[#318ce7]" />
+                <div key={idx} className="flex items-center gap-5 p-6 bg-white rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/30 hover:border-[#318ce750] transition-all group">
+                  <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center shrink-0 group-hover:bg-[#318ce7] transition-colors">
+                    <item.icon className="w-6 h-6 text-[#318ce7] group-hover:text-white transition-colors" />
                   </div>
                   <div>
-                    <h3 className="text-[10px] font-black uppercase text-slate-400">{item.title}</h3>
-                    <p className="font-bold text-slate-700 text-sm">{item.val}</p>
+                    <h3 className="text-[10px] font-black uppercase text-slate-400 tracking-widest">{item.title}</h3>
+                    <p className="font-bold text-slate-800 text-sm mt-1">{item.val}</p>
                   </div>
                 </div>
               ))}
               
-              <div className="p-6 bg-[#318ce7] rounded-2xl text-white shadow-xl shadow-blue-200 relative overflow-hidden group">
-                <Linkedin className="absolute -right-4 -bottom-4 w-24 h-24 text-white/10 group-hover:scale-110 transition-transform" />
-                <h4 className="font-bold mb-2 flex items-center gap-2">SkyWay Technologies sur LinkedIn</h4>
-                <p className="text-xs text-blue-50 leading-relaxed max-w-[200px]">Rejoignez notre réseau pour suivre les innovations logistiques.</p>
+              {/* Carte LinkedIn Premium */}
+              <div className="p-8 bg-[#003366] rounded-[2rem] text-white shadow-2xl shadow-blue-900/20 relative overflow-hidden group border border-white/5">
+                <Linkedin className="absolute -right-4 -bottom-4 w-32 h-32 text-white/5 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500" />
+                <div className="relative z-10">
+                  <h4 className="font-black text-lg mb-2 flex items-center gap-2">SkyWay sur LinkedIn</h4>
+                  <p className="text-xs text-blue-100/70 leading-relaxed max-w-[240px] font-medium">
+                    Suivez nos innovations en transport communal et nos déploiements Big Data à travers l'Afrique.
+                  </p>
+                  <button className="mt-4 text-[10px] font-black uppercase tracking-widest bg-white/10 px-4 py-2 rounded-lg hover:bg-white/20 transition-colors">
+                    Voir le profil
+                  </button>
+                </div>
               </div>
             </div>
 
-            {/* Formulaire (Droite) */}
-            <div className="lg:col-span-7 bg-white rounded-[2.5rem] border border-slate-100 p-10 shadow-2xl shadow-slate-200/50">
+            {/* Formulaire Intelligent (Droite) */}
+            <div className="lg:col-span-7 bg-white rounded-[3rem] border border-slate-100 p-8 lg:p-12 shadow-2xl shadow-slate-200/40 relative">
               {submitted ? (
-                <div className="text-center py-16 animate-in zoom-in">
-                  <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6"><CheckCircle className="w-8 h-8" /></div>
-                  <h3 className="text-2xl font-black text-[#318ce7] mb-2">Message envoyé !</h3>
-                  <p className="text-slate-500 text-sm font-medium">Nous vous recontacterons très rapidement.</p>
+                <div className="text-center py-20 animate-in zoom-in duration-500">
+                  <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
+                    <CheckCircle className="w-10 h-10" />
+                  </div>
+                  <h3 className="text-3xl font-black text-[#318ce7] mb-3">Brief reçu avec succès !</h3>
+                  <p className="text-slate-500 text-lg font-medium max-w-sm mx-auto leading-relaxed">
+                    Un consultant SkyWay (Pôle Mobilité ou Tech) vous recontactera sous 24 heures.
+                  </p>
+                  <button 
+                    onClick={() => setSubmitted(false)}
+                    className="mt-8 text-sm font-black text-[#318ce7] hover:underline"
+                  >
+                    Envoyer une autre demande
+                  </button>
                 </div>
               ) : (
-                <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-1.5">
-                      <label className="text-[10px] font-black text-slate-400 uppercase ml-2">Nom complet</label>
-                      <input type="text" required placeholder="Jean Dupont" className="w-full px-5 py-3.5 bg-slate-50/50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-2 focus:ring-[#318ce7] outline-none font-bold text-sm transition-all" />
+                <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }} className="space-y-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-2">
+                      <label className="text-[11px] font-black text-slate-400 uppercase ml-2 tracking-widest">Identité / Structure</label>
+                      <input type="text" required placeholder="Ex: Mairie de... ou Entreprise SAS" className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-2 focus:ring-[#318ce7] focus:border-transparent outline-none font-bold text-sm transition-all shadow-inner" />
                     </div>
-                    <div className="space-y-1.5">
-                      <label className="text-[10px] font-black text-slate-400 uppercase ml-2">Email Pro</label>
-                      <input type="email" required placeholder="jean@entreprise.fr" className="w-full px-5 py-3.5 bg-slate-50/50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-2 focus:ring-[#318ce7] outline-none font-bold text-sm transition-all" />
+                    <div className="space-y-2">
+                      <label className="text-[11px] font-black text-slate-400 uppercase ml-2 tracking-widest">Email Professionnel</label>
+                      <input type="email" required placeholder="contact@votre-domaine.com" className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-2 focus:ring-[#318ce7] focus:border-transparent outline-none font-bold text-sm transition-all shadow-inner" />
                     </div>
                   </div>
-                  <div className="space-y-1.5">
-                    <label className="text-[10px] font-black text-slate-400 uppercase ml-2">Votre Message</label>
-                    <textarea required rows={4} placeholder="Comment pouvons-nous vous aider ?" className="w-full px-5 py-3.5 bg-slate-50/50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-2 focus:ring-[#318ce7] outline-none font-bold text-sm transition-all resize-none" />
+
+                  <div className="space-y-2">
+                    <label className="text-[11px] font-black text-slate-400 uppercase ml-2 tracking-widest">Pôle de compétence souhaité</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <button type="button" className="flex items-center gap-3 p-4 border-2 border-slate-100 rounded-2xl hover:border-[#318ce7] transition-all text-left group">
+                        <Bus className="text-slate-300 group-hover:text-orange-500" size={20} />
+                        <span className="text-xs font-black text-slate-600">Transport Communal</span>
+                      </button>
+                      <button type="button" className="flex items-center gap-3 p-4 border-2 border-slate-100 rounded-2xl hover:border-[#318ce7] transition-all text-left group">
+                        <Database className="text-slate-300 group-hover:text-[#318ce7]" size={20} />
+                        <span className="text-xs font-black text-slate-600">Ingénierie Big Data</span>
+                      </button>
+                    </div>
                   </div>
-                  <button type="submit" className="w-full py-5 bg-[#318ce7] text-white rounded-2xl font-black text-sm hover:bg-orange-500 transition-all shadow-lg shadow-blue-200 hover:shadow-orange-200 flex items-center justify-center gap-2 group">
-                    Envoyer le brief <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+
+                  <div className="space-y-2">
+                    <label className="text-[11px] font-black text-slate-400 uppercase ml-2 tracking-widest">Votre Brief Projet</label>
+                    <textarea required rows={5} placeholder="Décrivez votre besoin : déploiement de réseau urbain, développement d'ERP métier, audit de données..." className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-2 focus:ring-[#318ce7] focus:border-transparent outline-none font-bold text-sm transition-all shadow-inner resize-none" />
+                  </div>
+
+                  <button type="submit" className="w-full py-5 bg-[#318ce7] text-white rounded-[1.2rem] font-black text-sm hover:bg-orange-600 transition-all shadow-xl shadow-blue-200 hover:shadow-orange-200 flex items-center justify-center gap-3 group">
+                    Lancer la collaboration <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                   </button>
                 </form>
               )}
@@ -96,20 +135,34 @@ const ContactPage: React.FC = () => {
         </div>
       </section>
 
-      {/* --- FAQ MINI --- */}
-      <section className="py-20 bg-slate-50/50 border-t border-slate-200">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-2xl font-black text-[#318ce7] mb-10 flex items-center justify-center gap-3">
-            <Clock className="w-6 h-6 text-orange-500" /> FAQ Express
+      {/* --- FAQ MINI : EXPERTISE MULTISERVICE --- */}
+      <section className="py-24 bg-slate-50/50 border-t border-slate-200">
+        <div className="max-w-5xl mx-auto px-6">
+          <h2 className="text-3xl font-black text-[#318ce7] mb-12 flex items-center justify-center gap-4 text-center">
+            <Clock className="w-8 h-8 text-orange-500" /> Réponses d'Experts
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
-              { q: 'Diagnostic gratuit ?', a: 'Oui, le premier audit de vos flux est offert.' },
-              { q: 'Délais de réponse ?', a: 'Moins de 24h ouvrées pour toute demande.' },
+              { 
+                q: 'Accompagnement des communes ?', 
+                a: 'Oui, nous proposons des audits complets pour structurer vos réseaux de transport en mode communal.' 
+              },
+              { 
+                q: 'Ingénierie sur-mesure ?', 
+                a: 'Nos développeurs conçoivent des applications ERP et mobiles basées sur vos besoins métiers spécifiques.' 
+              },
+              { 
+                q: 'Cycle Big Data complet ?', 
+                a: 'De la captation des données à l\'analyse prédictive, nous gérons l\'ensemble du pipeline technologique.' 
+              },
+              { 
+                q: 'Disponibilité du support ?', 
+                a: 'Une équipe technique dédiée est disponible 24/7 pour nos solutions d\'entreprise et réseaux urbains.' 
+              },
             ].map((faq, i) => (
-              <div key={i} className="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm text-left">
-                <h4 className="text-sm font-black text-[#318ce7] mb-2">{faq.q}</h4>
-                <p className="text-xs text-slate-500 font-medium">{faq.a}</p>
+              <div key={i} className="p-8 bg-white rounded-3xl border border-slate-200 shadow-sm text-left hover:shadow-lg transition-all border-l-4 border-l-[#318ce7]">
+                <h4 className="text-sm font-black text-[#318ce7] mb-3 leading-tight">{faq.q}</h4>
+                <p className="text-xs text-slate-500 font-bold leading-relaxed">{faq.a}</p>
               </div>
             ))}
           </div>

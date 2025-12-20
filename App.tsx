@@ -11,7 +11,7 @@ import DataPage from './pages/DataPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import AdminLogin from './pages/AdminLogin';
-import AdminLayout from './pages/AdminLayout';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   const location = useLocation();
@@ -34,7 +34,7 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/dashboard" element={<AdminLayout />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
       </Routes>
       {/* Footer only on home */}
       {/* show Footer only when at root path */}

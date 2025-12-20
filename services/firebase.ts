@@ -1,36 +1,27 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB609l7Wrlu_mRzs5nwO8Rx-IjdmxUe730",
-  authDomain: "smart-48b40.firebaseapp.com",
-  projectId: "smart-48b40",
-  storageBucket: "smart-48b40.firebasestorage.app",
-  messagingSenderId: "15288446070",
-  appId: "1:15288446070:web:ce4b284d4f00f190220357",
-  measurementId: "G-H1RLCH3PMV"
+  apiKey: "AIzaSyD-vBKvHG7gWie8uC90vlC9zfbX3RB7tas",
+  authDomain: "sad-466423.firebaseapp.com",
+  projectId: "sad-466423",
+  storageBucket: "sad-466423.firebasestorage.app",
+  messagingSenderId: "715608107645",
+  appId: "1:715608107645:web:2199ae0a98f3f646165f14",
+  measurementId: "G-EVPR2C2EY5"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-let analytics: ReturnType<typeof getAnalytics> | null = null;
-try {
-  analytics = getAnalytics(app);
-} catch (e) {
-  // Analytics can fail in non-browser environments or if disabled
-  analytics = null;
-}
-
 const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-export { app, analytics, auth, db, storage };
+let analytics = null;
+if (typeof window !== "undefined") {
+  analytics = getAnalytics(app);
+}
 
-export default app;
+export { app, auth, db, storage, analytics };
