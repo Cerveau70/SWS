@@ -4,70 +4,58 @@ import { Truck, BrainCircuit, Linkedin, Twitter, Facebook, MessageSquare } from 
 const Footer: React.FC = () => {
   return (
     <>
-      <footer className="bg-sws-blueLight text-white border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-
+      <footer className="bg-orange-300 border-t border-slate-100 py-4">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
             <div className="col-span-1 md:col-span-1">
-              <div className="flex items-center gap-3 mb-4 text-white">
-                <div className="bg-sws-orange p-2 rounded-md shadow-md">
-                  <div className="flex gap-1 items-center">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="bg-[#318ce7] p-2 rounded-xl shadow-lg shadow-blue-500/20">
+                  <div className="flex gap-1">
                     <Truck className="w-5 h-5 text-white" />
                     <BrainCircuit className="w-5 h-5 text-white" />
                   </div>
                 </div>
                 <div>
-                  <span className="font-bold text-xl tracking-tighter">SWS</span>
-                  <div className="text-xs text-white/80">Smart World Solutions</div>
+                  <span className="font-black text-2xl text-[#318ce7] tracking-tighter">SWS</span>
+                  <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Smart World Solutions</div>
                 </div>
               </div>
-              <p className="text-sm leading-relaxed text-white/90">
+              <p className="text-sm font-medium text-slate-500 leading-relaxed">
                 Connecter le monde physique et numérique pour créer une logistique intelligente et durable.
               </p>
             </div>
 
-            <div>
-              <h4 className="text-white font-bold mb-4 uppercase text-sm">Services</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#transport" className="hover:text-sws-orange transition-colors">Transport Routier</a></li>
-                <li><a href="#transport" className="hover:text-sws-orange transition-colors">Fret Aérien</a></li>
-                <li><a href="#data" className="hover:text-sws-orange transition-colors">Analyse Big Data</a></li>
-                <li><a href="#data" className="hover:text-sws-orange transition-colors">Solutions IA</a></li>
-              </ul>
-            </div>
+            {[
+              { title: 'Services', links: ['Transport Routier', 'Fret Aérien', 'Analyse Big Data', 'Solutions IA'] },
+              { title: 'Entreprise', links: ['À Propos', 'Carrières', 'Blog', 'Mentions Légales'] }
+            ].map((col, idx) => (
+              <div key={idx}>
+                <h4 className="text-slate-800 font-black mb-6 uppercase text-xs tracking-widest">{col.title}</h4>
+                <ul className="space-y-3">
+                  {col.links.map(link => (
+                    <li key={link}><a href="#" className="text-sm font-bold text-slate-500 hover:text-[#318ce7] transition-colors">{link}</a></li>
+                  ))}
+                </ul>
+              </div>
+            ))}
 
             <div>
-              <h4 className="text-white font-bold mb-4 uppercase text-sm">Entreprise</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#about" className="hover:text-sws-orange transition-colors">À Propos</a></li>
-                <li><a href="#" className="hover:text-sws-orange transition-colors">Carrières</a></li>
-                <li><a href="#" className="hover:text-sws-orange transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-sws-orange transition-colors">Mentions Légales</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-white font-bold mb-4 uppercase text-sm">Suivez-nous</h4>
-              <div className="flex items-center gap-3">
-                <a href="#" className="p-2 bg-slate-800 rounded-full hover:bg-sws-orange hover:text-white transition-all">
-                  <Linkedin className="w-5 h-5" />
-                </a>
-                <a href="#" className="p-2 bg-slate-800 rounded-full hover:bg-sws-orange hover:text-white transition-all">
-                  <Twitter className="w-5 h-5" />
-                </a>
-                <a href="#" className="p-2 bg-slate-800 rounded-full hover:bg-sws-orange hover:text-white transition-all">
-                  <Facebook className="w-5 h-5" />
-                </a>
+              <h4 className="text-slate-800 font-black mb-6 uppercase text-xs tracking-widest">Suivez-nous</h4>
+              <div className="flex gap-3">
+                {[Linkedin, Twitter, Facebook].map((Icon, i) => (
+                  <a key={i} href="#" className="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center text-[#318ce7] hover:bg-orange-500 hover:text-white transition-all shadow-sm">
+                    <Icon className="w-5 h-5" />
+                  </a>
+                ))}
               </div>
             </div>
-
           </div>
         </div>
       </footer>
 
-      {/* Floating chat button bottom-left */}
-      <a href="#contact" className="fixed left-6 bottom-6 z-50 bg-sws-orange p-3 rounded-full shadow-lg hover:scale-105 transition-transform flex items-center justify-center" aria-label="Chat">
-        <MessageSquare className="w-5 h-5 text-white" />
+      {/* Floating Action Button */}
+      <a href="#contact" className="fixed left-8 bottom-8 z-50 bg-orange-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform shadow-orange-500/40">
+        <MessageSquare className="w-6 h-6" />
       </a>
     </>
   );
