@@ -1,96 +1,109 @@
 import React, { useState } from 'react';
-import { Menu, X, Truck, BrainCircuit, Home, Database, Info, Mail } from 'lucide-react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Menu, X, Truck, BrainCircuit, Home, Database, Info, Mail, ChevronRight } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggleMenu = () => setIsOpen(!isOpen);
-
-  const navigate = useNavigate();
 
   const navLinks = [
     { name: 'Accueil', to: '/', Icon: Home },
     { name: 'Expertise Transport', to: '/transport', Icon: Truck },
     { name: 'Solutions Data & IA', to: '/data', Icon: Database },
     { name: 'À Propos', to: '/about', Icon: Info },
-    { name: 'Contact', to: '/contact', Icon: Mail },
   ];
 
-
   return (
-    <nav className="fixed w-full z-50 bg-sws-blue/95 backdrop-blur-sm text-white shadow-lg border-b border-white/10">
+    <nav className="fixed w-full z-50 bg-[#318ce7]/90 backdrop-blur-md text-white shadow-2xl border-b border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <div className="flex-shrink-0 flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
-            <div className="bg-sws-orange p-2 rounded-lg">
+          
+          {/* --- LOGO --- */}
+          <div 
+            className="flex-shrink-0 flex items-center gap-3 cursor-pointer group" 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          >
+            <div className="bg-gradient-to-br from-orange-400 to-orange-600 p-2 rounded-xl shadow-lg shadow-orange-500/20 group-hover:scale-110 transition-transform duration-300">
               <div className="flex gap-1">
-                <Truck className="w-6 h-6 text-white" />
-                <BrainCircuit className="w-6 h-6 text-white" />
+                <Truck className="w-5 h-5 text-white" />
+                <BrainCircuit className="w-5 h-5 text-white" />
               </div>
             </div>
-            <span className="font-bold text-2xl tracking-tighter">SWS</span>
+            <div className="flex flex-col">
+              <span className="font-black text-2xl tracking-tighter leading-none">SWS</span>
+              <span className="text-[10px] uppercase tracking-[0.2em] text-orange-400 font-bold">Solutions</span>
+            </div>
           </div>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
+          {/* --- DESKTOP MENU --- */}
+          <div className="hidden md:flex items-center space-x-2">
+            <div className="flex items-center space-x-1 mr-4">
               {navLinks.map((link) => (
                 <NavLink
                   key={link.name}
                   to={link.to}
-                  onClick={() => setIsOpen(false)}
                   className={({ isActive }) =>
-                    `transition-colors duration-300 px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 ${isActive ? 'text-sws-orange' : 'hover:text-sws-orange'}`
+                    `relative px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2.5 transition-all duration-300 group
+                    ${isActive ? 'text-orange-400' : 'text-blue-100 hover:text-white hover:bg-white/5'}`
                   }
                 >
-                  <link.Icon className="w-4 h-4 opacity-90" />
+                  <link.Icon className="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity" />
                   <span>{link.name}</span>
+                  {/* Barre animée sous l'élément actif */}
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-orange-400 transition-all duration-300 group-[.active]:w-1/2" />
                 </NavLink>
               ))}
-              <NavLink
-                to="/contact"
-                onClick={() => setIsOpen(false)}
-                className={({ isActive }) => `bg-sws-orange hover:bg-sws-orangeDark text-white px-5 py-2 rounded-full font-semibold transition-all shadow-md transform hover:scale-105 ${isActive ? 'ring-2 ring-white/20' : ''}`}
-              >
-                Devis Gratuit
-              </NavLink>
             </div>
+
+            <NavLink
+              to="/contact"
+              className="group bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-full font-bold transition-all shadow-lg shadow-orange-500/20 flex items-center gap-2 hover:translate-y-[-2px] active:translate-y-0"
+            >
+              Contact
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </NavLink>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="-mr-2 flex md:hidden">
+          {/* --- MOBILE BUTTON --- */}
+          <div className="flex md:hidden">
             <button
               onClick={toggleMenu}
-              type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none"
+              className="p-2 rounded-xl bg-white/5 text-white hover:bg-white/10 transition-colors"
             >
-              <span className="sr-only">Open main menu</span>
-              {isOpen ? <X className="block h-6 w-6" /> : <Menu className="block h-6 w-6" />}
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden bg-sws-blueLight border-t border-gray-700">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.name}
-                to={link.to}
-                onClick={() => setIsOpen(false)}
-                className={({ isActive }) => `text-gray-300 ${isActive ? 'text-sws-orange' : 'hover:text-sws-orange'} block px-3 py-2 rounded-md text-base font-medium flex items-center gap-2 w-full text-left`}
-              >
-                <link.Icon className="w-5 h-5" />
-                <span>{link.name}</span>
-              </NavLink>
-            ))}
+      {/* --- MOBILE MENU --- */}
+      <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+        <div className="px-4 pt-2 pb-6 space-y-2 bg-[#002244] border-t border-white/5 shadow-inner">
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.name}
+              to={link.to}
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) => 
+                `flex items-center gap-4 px-4 py-3 rounded-xl text-base font-bold transition-all
+                ${isActive ? 'bg-orange-500/10 text-orange-400' : 'text-blue-100 hover:bg-white/5'}`
+              }
+            >
+              <link.Icon className="w-5 h-5" />
+              <span>{link.name}</span>
+            </NavLink>
+          ))}
+          <div className="pt-4">
+            <NavLink
+              to="/contact"
+              onClick={() => setIsOpen(false)}
+              className="flex items-center justify-center gap-2 w-full bg-orange-500 text-white py-4 rounded-xl font-black shadow-lg shadow-orange-500/20"
+            >
+              Devis Gratuit
+            </NavLink>
           </div>
         </div>
-      )}
+      </div>
     </nav>
   );
 };
