@@ -147,13 +147,13 @@ const AdminLogin: React.FC = () => {
             <div className="space-y-2">
               <div className="flex justify-between items-center px-4">
                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Mot de passe</label>
-                 <button 
+                 {/* <button 
                   type="button"
                   onClick={handleForgotPassword}
                   className="text-[9px] font-black text-[#318ce7] uppercase hover:underline"
                  >
                    Oublié ?
-                 </button>
+                 </button> */}
               </div>
               <div className="relative">
                 <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300" />
@@ -184,14 +184,14 @@ const AdminLogin: React.FC = () => {
             </button>
           </form>
 
-          {/* Séparateur */}
+          {/* Séparateur
           <div className="relative my-10 text-center">
             <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-slate-100"></div></div>
             <span className="relative bg-white px-4 text-[10px] font-black text-slate-300 uppercase tracking-[0.3em]">Ou continuer avec</span>
           </div>
 
           {/* Login Google */}
-          <button 
+          {/* <button 
             type="button"
             onClick={handleGoogleLogin}
             className="w-full py-4 bg-white border-2 border-slate-50 hover:border-slate-200 rounded-2xl flex items-center justify-center gap-4 transition-all group shadow-sm hover:shadow-md"
@@ -203,7 +203,7 @@ const AdminLogin: React.FC = () => {
                 <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.85-2.98c-1.06.72-2.45 1.16-4.08 1.16-3.15 0-5.81-2.13-6.76-5.01L1.2 17.55C3.26 21.48 7.33 24 12 24z"/>
             </svg>
             <span className="text-xs font-black text-slate-700 uppercase tracking-widest">Compte Google</span>
-          </button>
+          </button> */} 
         </div>
 
         <p className="text-center text-[9px] text-slate-400 mt-10 font-black uppercase tracking-[0.2em] flex items-center justify-center gap-2">

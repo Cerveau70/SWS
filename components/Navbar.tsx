@@ -1,68 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Truck, BrainCircuit, Home, Database, Info, ChevronRight, Users, Activity } from 'lucide-react';
-import { NavLink } from 'react-router-dom';
-
-// Import Firebase logic
+import { NavLink, useNavigate } from 'react-router-dom';
 import { db } from '../services/firebase';
 import { doc, updateDoc, increment, setDoc, onSnapshot } from 'firebase/firestore';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [totalVisits, setTotalVisits] = useState<number | null>(null);
+  const navigate = useNavigate();
   
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // --- LOGIQUE DE TRACKING & AFFICHAGE ---
   useEffect(() => {
-    // 1. Fonction pour incrémenter la visite (une seule fois par session)
     const handleTrackVisit = async () => {
       const hasVisited = sessionStorage.getItem('SKT_tracked');
       if (!hasVisited) {
-        const today = new Date().toISOString().split('T')[0];
         const statsRef = doc(db, "analytics", "overview");
-        const dailyRef = doc(db, "daily_analytics", today);
-
         try {
           await updateDoc(statsRef, { totalVisits: increment(1) });
-          await setDoc(dailyRef, { count: increment(1) }, { merge: true });
         } catch (e) {
           await setDoc(statsRef, { totalVisits: 1 }, { merge: true });
-          await setDoc(dailyRef, { count: 1 }, { merge: true });
         }
         sessionStorage.setItem('SKT_tracked', 'true');
       }
     };
-
     handleTrackVisit();
-
-    // 2. Écouter le nombre de visites en temps réel
     const unsub = onSnapshot(doc(db, "analytics", "overview"), (snap) => {
-      if (snap.exists()) {
-        setTotalVisits(snap.data().totalVisits);
-      }
+      if (snap.exists()) setTotalVisits(snap.data().totalVisits);
     });
-
     return () => unsub();
   }, []);
 
   const navLinks = [
     { name: 'Accueil', to: '/', Icon: Home },
-    { name: 'Expertise', to: '/transport', Icon: Truck },
-    { name: 'Solutions', to: '/data', Icon: Database },
+    { name: 'Transport', to: '/transport', Icon: Truck },
+    { name: 'Data & IA', to: '/data', Icon: Database },
+    { name: 'Événementiel', to: '/event', Icon: Activity },
     { name: 'À Propos', to: '/about', Icon: Info },
   ];
 
   return (
     <nav className="fixed w-full z-50 bg-[#318ce7]/90 backdrop-blur-md text-white shadow-2xl border-b border-white/5">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
+        <div className="flex items-center justify-between h-20"> {/* justify-between sépare les deux blocs */}
           
-          {/* --- LOGO --- */}
+          {/* --- LOGO (Extrême Gauche) --- */}
           <div 
             className="flex-shrink-0 flex items-center gap-3 cursor-pointer group" 
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            onClick={() => {
+              navigate('/');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
           >
-            <div className="bg-gradient-to-br from-orange-400 to-orange-600 p-2 rounded-xl shadow-lg shadow-orange-500/20 group-hover:scale-110 transition-transform duration-300">
+            <div className="bg-gradient-to-br from-orange-400 to-orange-600 p-2 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
               <div className="flex gap-1">
                 <Truck className="w-5 h-5 text-white" />
                 <BrainCircuit className="w-5 h-5 text-white" />
@@ -74,19 +64,19 @@ const Navbar: React.FC = () => {
             </div>
           </div>
 
-          {/* --- DESKTOP MENU --- */}
-          <div className="hidden md:flex items-center space-x-2">
+          {/* --- MENU ET ACTIONS (Extrême Droite) --- */}
+          <div className="hidden md:flex items-center gap-4">
             <div className="flex items-center space-x-1 mr-4">
               {navLinks.map((link) => (
                 <NavLink
                   key={link.name}
                   to={link.to}
                   className={({ isActive }) =>
-                    `relative px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2.5 transition-all duration-300 group
-                    ${isActive ? 'text-orange-400' : 'text-blue-100 hover:text-white hover:bg-white/5'}`
+                    `relative px-3 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-all duration-300
+                    ${isActive ? 'text-orange-400 bg-white/5' : 'text-blue-50 hover:text-white hover:bg-white/10'}`
                   }
                 >
-                  <link.Icon className="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity" />
+                  <link.Icon className="w-4 h-4 opacity-70" />
                   <span>{link.name}</span>
                 </NavLink>
               ))}
@@ -95,73 +85,48 @@ const Navbar: React.FC = () => {
             <div className="flex items-center gap-3">
                 <NavLink
                 to="/contact"
-                className="group bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-full font-bold transition-all shadow-lg shadow-orange-500/20 flex items-center gap-2 hover:translate-y-[-2px] active:translate-y-0"
+                className="group bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-full font-bold transition-all shadow-lg flex items-center gap-2 hover:translate-y-[-2px]"
                 >
                 Contact
                 <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </NavLink>
 
-                {/* --- VISITOR COUNTER BADGE --- */}
-                <div className="flex items-center gap-2.5 bg-white/10 backdrop-blur-lg px-4 py-2 rounded-2xl border border-white/10 shadow-inner group cursor-default ml-2">
+                {/* --- COMPTEUR VISITEURS (Plus fin) --- */}
+                <div className="flex items-center gap-2 bg-white/10 px-2 py-1.5 rounded-xl border border-white/10 min-w-[65px] justify-center">
                     <div className="relative">
-                        <Users className="w-4 h-4 text-orange-400" />
-                        <span className="absolute -top-1 -right-1 w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse border border-[#318ce7]"></span>
+                        <Users className="w-3.5 h-3.5 text-orange-400" />
+                        <span className="absolute -top-1 -right-1 w-1 h-1 bg-green-400 rounded-full animate-pulse"></span>
                     </div>
                     <div className="flex flex-col leading-none">
-                        <span className="text-[11px] font-black tracking-tighter">
+                        <span className="text-[10px] font-black">
                             {totalVisits !== null ? totalVisits.toLocaleString() : '...'}
                         </span>
-                        <span className="text-[7px] uppercase tracking-widest text-blue-200 font-bold">Visiteurs</span>
+                        <span className="text-[6px] uppercase font-bold text-blue-200">Visiteurs</span>
                     </div>
                 </div>
             </div>
           </div>
 
-          {/* --- MOBILE BUTTON --- */}
+          {/* MOBILE BUTTON */}
           <div className="flex md:hidden">
-            <button
-              onClick={toggleMenu}
-              className="p-2 rounded-xl bg-white/5 text-white hover:bg-white/10 transition-colors"
-            >
+            <button onClick={toggleMenu} className="p-2 rounded-xl bg-white/5 text-white">
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* --- MOBILE MENU --- */}
-      <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
-        <div className="px-4 pt-2 pb-6 space-y-2 bg-[#002244] border-t border-white/5 shadow-inner">
+      {/* MOBILE MENU */}
+      <div className={`md:hidden overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+        <div className="px-4 pt-2 pb-6 space-y-2 bg-[#002244] border-t border-white/5">
           {navLinks.map((link) => (
-            <NavLink
-              key={link.name}
-              to={link.to}
-              onClick={() => setIsOpen(false)}
-              className={({ isActive }) => 
-                `flex items-center gap-4 px-4 py-3 rounded-xl text-base font-bold transition-all
-                ${isActive ? 'bg-orange-500/10 text-orange-400' : 'text-blue-100 hover:bg-white/5'}`
-              }
-            >
+            <NavLink key={link.name} to={link.to} onClick={() => setIsOpen(false)} className="flex items-center gap-4 px-4 py-3 text-blue-100 font-bold hover:bg-white/5 rounded-xl">
               <link.Icon className="w-5 h-5" />
               <span>{link.name}</span>
             </NavLink>
           ))}
-          
-          {/* Mobile Visitor Counter */}
-          <div className="flex items-center justify-between px-4 py-3 bg-white/5 rounded-xl border border-white/5">
-            <div className="flex items-center gap-3">
-                <Users className="w-5 h-5 text-orange-400" />
-                <span className="text-sm font-bold text-blue-100 uppercase tracking-widest">Audience Mondiale</span>
-            </div>
-            <span className="text-lg font-black text-white">{totalVisits || '...'}</span>
-          </div>
-
           <div className="pt-4">
-            <NavLink
-              to="/contact"
-              onClick={() => setIsOpen(false)}
-              className="flex items-center justify-center gap-2 w-full bg-orange-500 text-white py-4 rounded-xl font-black shadow-lg shadow-orange-500/20"
-            >
+            <NavLink to="/contact" onClick={() => setIsOpen(false)} className="flex items-center justify-center bg-orange-500 text-white py-4 rounded-xl font-black">
               Démarrer un projet
             </NavLink>
           </div>

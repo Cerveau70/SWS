@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { ArrowRight, Bus, Code2, Sparkles, ShieldCheck, Database } from 'lucide-react';
-import logisImg from '../img/asc.jpg';
-import bigImg from '../img/bigdata.jpg';
-import cardLogis from '../img/logis.jpg'; 
-import cardBig from '../img/big.png';   
+import logisImg from '../public/img/asc.jpg';
+import bigImg from '../public/img/bigdata.jpg';
+import cardBig from '../public/img/big.png';
+import eventImg from '../public/img/logiss.jpg';
 
 const Typewriter: React.FC = () => {
   const fullText = 'Connectez la Ville.\nMaîtrisez la Data.';
@@ -61,11 +61,11 @@ const Hero: React.FC = () => {
       {/* --- BACKGROUND LAYER --- */}
       <div className="absolute inset-0 z-0">
         <div
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-[10s] scale-105"
+          className="absolute inset-0 bg-cover bg-center opacity-40 transition-transform duration-[10s] scale-105"
           style={{ backgroundImage: `url(${logisImg})` }}
         />
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay"
+          className="absolute inset-0 bg-cover bg-center opacity-99 mix-blend-overlay"
           style={{ backgroundImage: `url(${bigImg})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/80 to-transparent z-10" />
@@ -79,7 +79,7 @@ const Hero: React.FC = () => {
             <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 shadow-2xl">
               <Sparkles className="w-4 h-4 text-orange-400" />
               <span className="text-xs font-black uppercase tracking-[0.2em] text-blue-200">
-                Mobilité Urbaine & Excellence Digitale
+                Plateforme Data & IA • Transport • Événementiel
               </span>
             </div>
 
@@ -88,12 +88,12 @@ const Hero: React.FC = () => {
             </h1>
 
             <p className="text-lg lg:text-xl text-slate-300 max-w-lg leading-relaxed font-medium">
-              SkyWay Technologies réinvente le <span className="text-white font-bold">transport communal</span> et digitalise les entreprises via un cycle complet d'ingénierie <span className="text-[#318ce7] font-bold">Big Data</span>.
+              SkyWay Technologies conçoit une <span className="text-white font-bold">plateforme d'ingénierie logicielle et Big Data</span> qui pilote vos services critiques – du <span className="text-[#318ce7] font-bold">transport communal</span> aux grands <span className="text-[#318ce7] font-bold">événements publics</span>.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-5 pt-4">
               {/* BOUTON 1 : Renvoie vers la section Contact */}
-              <button 
+              <button
                 onClick={() => scrollToSection('contact')}
                 className="group flex items-center justify-center gap-3 bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-2xl font-black transition-all shadow-xl shadow-orange-500/20 active:scale-95"
               >
@@ -102,7 +102,7 @@ const Hero: React.FC = () => {
               </button>
 
               {/* BOUTON 2 : Renvoie vers la section Services/Pôles */}
-              <button 
+              <button
                 onClick={() => scrollToSection('services')}
                 className="flex items-center justify-center gap-3 bg-white/5 hover:bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-4 rounded-2xl font-bold transition-all active:scale-95"
               >
@@ -111,35 +111,19 @@ const Hero: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-6 pt-8 border-t border-white/5">
-                <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-widest">
-                    <Database className="w-4 h-4 text-blue-400" /> Pipeline Big Data
-                </div>
-                <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-widest">
-                    <div className="w-2 h-2 rounded-full bg-orange-500 animate-ping" /> Réseau Urbain Connecté
-                </div>
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-widest">
+                <Database className="w-4 h-4 text-blue-400" /> Pipeline Big Data
+              </div>
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-widest">
+                <div className="w-2 h-2 rounded-full bg-orange-500 animate-ping" /> Réseau Urbain Connecté
+              </div>
             </div>
           </div>
 
-          {/* --- RIGHT VISUALS --- */}
+          {/* --- RIGHT VISUELS : ESCALIER ASCENDANT --- */}
           <div className="relative h-[550px] hidden lg:flex items-center justify-center">
-            
-            {/* Card 1: Transport Urbain Communal */}
-            <div className="absolute top-12 left-0 w-64 bg-white rounded-3xl p-5 shadow-2xl transform -rotate-6 hover:rotate-0 hover:-translate-y-2 transition-all duration-500 z-20 border border-slate-100">
-              <div className="h-36 rounded-2xl mb-4 overflow-hidden relative">
-                <img src={cardLogis} alt="Transport Urbain" className="object-cover w-full h-full" />
-                <div className="absolute inset-0 bg-orange-500/10 mix-blend-multiply" />
-              </div>
-              <div className="flex items-center gap-3 mb-2">
-                <div className="p-2 bg-orange-50 rounded-xl">
-                  <Bus className="w-5 h-5 text-orange-500" />
-                </div>
-                <h3 className="text-lg font-black text-slate-900">Mobilité</h3>
-              </div>
-              <p className="text-[11px] font-bold text-slate-500 leading-snug">Solutions de transport urbain en mode communal avec suivi intelligent.</p>
-            </div>
-
-            {/* Card 2: Développement & Enterprise Solutions */}
-            <div className="absolute bottom-12 right-0 w-64 bg-[#003366] rounded-3xl p-5 shadow-2xl shadow-blue-500/20 transform rotate-6 hover:rotate-0 hover:-translate-y-2 transition-all duration-500 z-10 border border-blue-400/20">
+            {/* Card 1: Pôle Data & Ingénierie Logicielle (niveau intermédiaire, carte principale) */}
+            <div className="absolute bottom-20 left-4 w-64 bg-[#003366] rounded-3xl p-5 shadow-2xl shadow-blue-500/20 transform -rotate-4 hover:rotate-0 hover:-translate-y-2 transition-all duration-500 z-30 border border-blue-400/20 hero-card-stagger-1">
               <div className="h-36 rounded-2xl mb-4 overflow-hidden relative">
                 <img src={cardBig} alt="Software Development" className="object-cover w-full h-full opacity-80" />
                 <div className="absolute inset-0 bg-[#318ce7]/20" />
@@ -148,9 +132,27 @@ const Hero: React.FC = () => {
                 <div className="p-2 bg-[#318ce7] rounded-xl">
                   <Code2 className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="text-lg font-black text-white">Engineering</h3>
+                <h3 className="text-lg font-black text-white">Data & Engineering</h3>
               </div>
-              <p className="text-[11px] font-medium text-blue-100/70 leading-snug">Développement d'applications métiers et intégration de systèmes complexes.</p>
+              <p className="text-[11px] font-medium text-blue-100/70 leading-snug">Orchestration de données temps réel, tableaux de bord et applications métiers pour vos services transport, événementiel et back-office.</p>
+            </div>
+
+            {/* Card 2: Pôle Logistique & Événementiel (niveau haut, à droite) */}
+            <div className="absolute bottom-40 right-0 w-64 bg-white rounded-3xl p-5 shadow-2xl transform rotate-3 hover:rotate-0 hover:-translate-y-2 transition-all duration-500 z-20 border border-slate-100 hero-card-stagger-2">
+              <div className="h-36 rounded-2xl mb-4 overflow-hidden relative">
+                <img src={eventImg} alt="Logistique & Événementiel" className="object-cover w-full h-full" />
+                <div className="absolute inset-0 bg-[#318ce7]/10 mix-blend-multiply" />
+              </div>
+              <div className="flex items-center gap-3 mb-2">
+                <div className="p-2 bg-blue-50 rounded-xl">
+                  <ShieldCheck className="w-5 h-5 text-[#318ce7]" />
+                </div>
+                <h3 className="text-lg font-black text-slate-900">Logistique & Événementiel</h3>
+              </div>
+
+              <p className="text-[11px] font-bold text-slate-500 leading-snug">
+                Organisation complète d’événements (fêtes, cérémonies, réunions, manifestations) avec **gestion du transport de personnes et de matériel**, ainsi que la location d’équipements événementiels (sonorisation, mobilier, tentes, éclairage, etc.).
+              </p>
             </div>
 
             <div className="absolute w-80 h-80 bg-[#318ce7]/10 rounded-full blur-[100px] animate-pulse" />

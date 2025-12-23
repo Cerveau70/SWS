@@ -8,6 +8,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import TransportPage from './pages/TransportPage';
 import DataPage from './pages/DataPage';
+import EventPage from './pages/EventPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import AdminLogin from './pages/AdminLogin';
@@ -31,6 +32,7 @@ function App() {
         } />
         <Route path="/transport" element={<TransportPage />} />
         <Route path="/data" element={<DataPage />} />
+        <Route path="/event" element={<EventPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/admin/login" element={<AdminLogin />} />

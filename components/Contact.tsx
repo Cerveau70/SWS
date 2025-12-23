@@ -163,7 +163,7 @@ const Contact: React.FC = () => {
 
             {/* Labels flottants SKT */}
             <div className="absolute top-10 right-0 bg-[#318ce7]/5 backdrop-blur-md px-4 py-2 rounded-full border border-[#318ce7]/10">
-                <span className="text-[10px] font-black text-[#318ce7] uppercase tracking-widest">SWS Core Engine v2.4</span>
+                <span className="text-[10px] font-black text-[#318ce7] uppercase tracking-widest">SKT Engine v2.4</span>
             </div>
             <div className="absolute bottom-10 right-4 bg-slate-900/5 backdrop-blur-md px-4 py-2 rounded-full border border-slate-200/20">
                 <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Digital City Ready</span>

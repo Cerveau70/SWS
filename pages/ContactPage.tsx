@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import { 
   Mail, Phone, MapPin, Send, CheckCircle, 
   Sparkles, Clock, Linkedin, ChevronRight, 
-  Bus, Database 
+  Bus, Database, Users
 } from 'lucide-react';
+import { createLead } from '../services/leads';
 
 const ContactPage: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [pole, setPole] = useState<'transport' | 'bigdata' | 'event' | ''>('');
+  const [formData, setFormData] = useState({ name: '', email: '', description: '' });
 
   return (
     <main className="min-h-screen bg-white font-sans text-slate-800">
@@ -68,9 +72,14 @@ const ContactPage: React.FC = () => {
                   <p className="text-xs text-blue-100/70 leading-relaxed max-w-[240px] font-medium">
                     Suivez nos innovations en transport communal et nos déploiements Big Data à travers l'Afrique.
                   </p>
-                  <button className="mt-4 text-[10px] font-black uppercase tracking-widest bg-white/10 px-4 py-2 rounded-lg hover:bg-white/20 transition-colors">
+                  <a
+                    href="https://www.linkedin.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-4 text-[10px] font-black uppercase tracking-widest bg-white/10 px-4 py-2 rounded-lg hover:bg-white/20 transition-colors"
+                  >
                     Voir le profil
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -94,39 +103,133 @@ const ContactPage: React.FC = () => {
                   </button>
                 </div>
               ) : (
-                <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }} className="space-y-8">
+                <form
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    if (!pole) return;
+                    setIsSubmitting(true);
+                    try {
+                      await createLead({
+                        name: formData.name,
+                        email: formData.email,
+                        pole:
+                          pole === 'transport'
+                            ? 'transport'
+                            : pole === 'bigdata'
+                            ? 'bigdata'
+                            : 'event',
+                        description: formData.description,
+                        source: 'contact-page',
+                      });
+                      setSubmitted(true);
+                      setFormData({ name: '', email: '', description: '' });
+                      setPole('');
+                    } catch (err) {
+                      console.error('Erreur Firestore:', err);
+                      alert("Une erreur est survenue lors de l'envoi.");
+                    } finally {
+                      setIsSubmitting(false);
+                    }
+                  }}
+                  className="space-y-8"
+                >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-2">
                       <label className="text-[11px] font-black text-slate-400 uppercase ml-2 tracking-widest">Identité / Structure</label>
-                      <input type="text" required placeholder="Ex: Mairie de... ou Entreprise SAS" className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-2 focus:ring-[#318ce7] focus:border-transparent outline-none font-bold text-sm transition-all shadow-inner" />
+                      <input
+                        type="text"
+                        required
+                        placeholder="Ex: Mairie de... ou Entreprise SAS"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-2 focus:ring-[#318ce7] focus:border-transparent outline-none font-bold text-sm transition-all shadow-inner"
+                      />
                     </div>
                     <div className="space-y-2">
                       <label className="text-[11px] font-black text-slate-400 uppercase ml-2 tracking-widest">Email Professionnel</label>
-                      <input type="email" required placeholder="contact@votre-domaine.com" className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-2 focus:ring-[#318ce7] focus:border-transparent outline-none font-bold text-sm transition-all shadow-inner" />
+                      <input
+                        type="email"
+                        required
+                        placeholder="contact@votre-domaine.com"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-2 focus:ring-[#318ce7] focus:border-transparent outline-none font-bold text-sm transition-all shadow-inner"
+                      />
                     </div>
                   </div>
 
                   <div className="space-y-2">
                     <label className="text-[11px] font-black text-slate-400 uppercase ml-2 tracking-widest">Pôle de compétence souhaité</label>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <button type="button" className="flex items-center gap-3 p-4 border-2 border-slate-100 rounded-2xl hover:border-[#318ce7] transition-all text-left group">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setPole('transport')}
+                        className={`flex items-center gap-3 p-4 border-2 rounded-2xl transition-all text-left group ${
+                          pole === 'transport'
+                            ? 'border-[#318ce7] bg-blue-50'
+                            : 'border-slate-100 hover:border-[#318ce7]'
+                        }`}
+                      >
                         <Bus className="text-slate-300 group-hover:text-orange-500" size={20} />
                         <span className="text-xs font-black text-slate-600">Transport Communal</span>
                       </button>
-                      <button type="button" className="flex items-center gap-3 p-4 border-2 border-slate-100 rounded-2xl hover:border-[#318ce7] transition-all text-left group">
+                      <button
+                        type="button"
+                        onClick={() => setPole('bigdata')}
+                        className={`flex items-center gap-3 p-4 border-2 rounded-2xl transition-all text-left group ${
+                          pole === 'bigdata'
+                            ? 'border-[#318ce7] bg-blue-50'
+                            : 'border-slate-100 hover:border-[#318ce7]'
+                        }`}
+                      >
                         <Database className="text-slate-300 group-hover:text-[#318ce7]" size={20} />
                         <span className="text-xs font-black text-slate-600">Ingénierie Big Data</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setPole('event')}
+                        className={`flex items-center gap-3 p-4 border-2 rounded-2xl transition-all text-left group ${
+                          pole === 'event'
+                            ? 'border-[#318ce7] bg-blue-50'
+                            : 'border-slate-100 hover:border-[#318ce7]'
+                        }`}
+                      >
+                        <Users className="text-slate-300 group-hover:text-orange-500" size={20} />
+                        <span className="text-xs font-black text-slate-600">
+                          Événementiel & logistique
+                        </span>
                       </button>
                     </div>
                   </div>
 
                   <div className="space-y-2">
                     <label className="text-[11px] font-black text-slate-400 uppercase ml-2 tracking-widest">Votre Brief Projet</label>
-                    <textarea required rows={5} placeholder="Décrivez votre besoin : déploiement de réseau urbain, développement d'ERP métier, audit de données..." className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-2 focus:ring-[#318ce7] focus:border-transparent outline-none font-bold text-sm transition-all shadow-inner resize-none" />
+                    <textarea
+                      required
+                      rows={5}
+                      placeholder="Décrivez votre besoin : déploiement de réseau urbain, développement d'ERP métier, audit de données, dispositif événementiel..."
+                      value={formData.description}
+                      onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                      className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-2 focus:ring-[#318ce7] focus:border-transparent outline-none font-bold text-sm transition-all shadow-inner resize-none"
+                    />
                   </div>
 
-                  <button type="submit" className="w-full py-5 bg-[#318ce7] text-white rounded-[1.2rem] font-black text-sm hover:bg-orange-600 transition-all shadow-xl shadow-blue-200 hover:shadow-orange-200 flex items-center justify-center gap-3 group">
-                    Lancer la collaboration <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  <button
+                    type="submit"
+                    disabled={isSubmitting || !pole}
+                    className="w-full py-5 bg-[#318ce7] text-white rounded-[1.2rem] font-black text-sm hover:bg-orange-600 transition-all shadow-xl shadow-blue-200 hover:shadow-orange-200 flex items-center justify-center gap-3 group disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        Envoi en cours...
+                        <ChevronRight className="w-5 h-5 animate-pulse" />
+                      </>
+                    ) : (
+                      <>
+                        Lancer la collaboration
+                        <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      </>
+                    )}
                   </button>
                 </form>
               )}

@@ -1,5 +1,7 @@
 import React from 'react';
 import { CheckCircle2, Zap, BarChart, Globe } from 'lucide-react';
+import datatImg from "../public/img/datat.jpg";
+
 
 const About: React.FC = () => {
   return (
@@ -15,7 +17,7 @@ const About: React.FC = () => {
             
             <div className="relative z-10 rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white group">
               <img 
-                src="/img/datat.png" 
+                src={datatImg}
                 alt="SkyWay Technologies Smart City" 
                 className="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-105"
               />
@@ -49,22 +51,23 @@ const About: React.FC = () => {
             <div>
               <h2 className="text-orange-500 font-black uppercase text-xs tracking-[0.3em] mb-4">À Propos de SkyWay Technologies</h2>
               <h3 className="text-4xl lg:text-5xl font-black text-[#318ce7] mb-6 leading-[1.1]">
-                L'architecte de vos flux <span className="text-slate-900">physiques</span> et <span className="text-slate-900">numériques</span>.
+                L'architecte de vos flux <span className="text-slate-900">numériques</span>, <span className="text-slate-900">urbains</span> et <span className="text-slate-900">événementiels</span>.
               </h3>
               <p className="text-slate-600 text-lg font-medium leading-relaxed">
-                SkyWay Technologies se positionne comme un acteur multiservices de référence. 
-                D'un côté, nous opérons un réseau de <span className="text-slate-900 font-bold underline decoration-orange-500 decoration-2 underline-offset-4">transport urbain communal</span> de haute précision. 
-                De l'autre, notre pôle ingénierie conçoit des <span className="text-[#318ce7] font-bold">solutions d'entreprise</span> sur-mesure, propulsées par une architecture Big Data robuste.
+                SkyWay Technologies est un acteur multiservices centré sur la donnée. 
+                Notre pôle d&apos;ingénierie logicielle et <span className="text-[#318ce7] font-bold">Big Data</span> propulse vos services métiers, qu&apos;il s&apos;agisse de 
+                <span className="text-slate-900 font-bold underline decoration-orange-500 decoration-2 underline-offset-4"> réseaux de transport communal</span>, 
+                d&apos;opérations <span className="text-slate-900 font-bold">événementielles</span> ou de back-office d&apos;entreprise.
               </p>
             </div>
 
             {/* Liste de points clés */}
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
-                { text: "Réseau urbain interconnecté", icon: Globe },
-                { text: "Ingénierie logicielle Full-Stack", icon: BarChart },
+                { text: "Architecture logicielle & Data centrée métier", icon: BarChart },
+                { text: "Réseau urbain interconnecté & supervisé", icon: Globe },
                 { text: "Analyse Big Data temps réel", icon: CheckCircle2 },
-                { text: "Partenaire des collectivités", icon: CheckCircle2 }
+                { text: "Orchestration d'événements et de flux publics", icon: CheckCircle2 }
               ].map((item, idx) => (
                 <li key={idx} className="flex items-center gap-3 bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
                   {typeof item.icon === 'string' ? (

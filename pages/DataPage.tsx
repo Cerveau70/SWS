@@ -1,11 +1,49 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { 
   Database, Code2, LayoutDashboard, Zap, 
   Mail, Phone, Sparkles, Cpu, ArrowRight, 
   ChevronRight, ShieldCheck, BarChart 
 } from 'lucide-react';
+import { createLead } from '../services/leads';
 
 const DataPage: React.FC = () => {
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    need: '',
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleHeroClick = () => {
+    if (formRef.current) {
+      formRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.need) return;
+    setIsSubmitting(true);
+    try {
+      await createLead({
+        name: formData.name || 'Structure non précisée',
+        email: formData.email,
+        pole: 'software',
+        description: `Besoin principal: ${formData.need}`,
+        source: 'data-page',
+      });
+      setSubmitted(true);
+      setFormData({ name: '', email: '', need: '' });
+    } catch (err) {
+      console.error('Erreur Firestore:', err);
+      alert("Une erreur est survenue lors de l'envoi.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-white font-sans text-slate-800">
       
@@ -35,7 +73,10 @@ const DataPage: React.FC = () => {
                 SkyWay Technologies déploie un cycle complet de <span className="text-[#318ce7] font-bold">Big Data</span> pour concevoir des applications métiers robustes et des solutions d'entreprise évolutives.
               </p>
               <div className="flex gap-4">
-                <button className="px-8 py-4 bg-[#318ce7] text-white rounded-2xl font-black text-sm hover:bg-[#2671ba] transition-all shadow-xl shadow-blue-400/20 flex items-center gap-2 group">
+                <button
+                  onClick={handleHeroClick}
+                  className="px-8 py-4 bg-[#318ce7] text-white rounded-2xl font-black text-sm hover:bg-[#2671ba] transition-all shadow-xl shadow-blue-400/20 flex items-center gap-2 group"
+                >
                   Lancer un projet <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
@@ -134,27 +175,65 @@ const DataPage: React.FC = () => {
             {/* Formulaire de Lead Rapide */}
             <div className="w-full max-w-md bg-white p-10 rounded-[2.5rem] shadow-2xl text-slate-800">
               <h4 className="text-xl font-black text-[#318ce7] mb-6">Demander un audit</h4>
-              <form className="space-y-4">
+              {submitted ? (
+                <div className="text-center py-10">
+                  <p className="text-[#318ce7] font-black mb-2">
+                    Brief reçu, un architecte Data vous recontacte.
+                  </p>
+                  <button
+                    onClick={() => setSubmitted(false)}
+                    className="text-xs font-black text-slate-500 underline"
+                  >
+                    Envoyer une autre demande
+                  </button>
+                </div>
+              ) : (
+                <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
                 <input 
                   type="text" 
                   placeholder="Nom de l'entreprise" 
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full px-5 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-orange-500 outline-none font-bold text-xs transition-all" 
                 />
                 <input 
                   type="email" 
+                    required
                   placeholder="Email professionnel" 
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full px-5 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-orange-500 outline-none font-bold text-xs transition-all" 
                 />
-                <select className="w-full px-5 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-orange-500 outline-none font-bold text-xs text-slate-500">
-                  <option>Besoin logiciel principal</option>
-                  <option>Développement ERP</option>
-                  <option>Audit Big Data</option>
-                  <option>Application Mobile</option>
+                  <select
+                    required
+                    value={formData.need}
+                    onChange={(e) => setFormData({ ...formData, need: e.target.value })}
+                    className="w-full px-5 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-orange-500 outline-none font-bold text-xs text-slate-500"
+                  >
+                    <option value="">Besoin logiciel principal</option>
+                    <option value="Développement ERP">Développement ERP</option>
+                    <option value="Audit Big Data">Audit Big Data</option>
+                    <option value="Application Mobile">Application Mobile</option>
                 </select>
-                <button className="w-full py-5 mt-4 bg-orange-500 text-white rounded-2xl font-black text-sm hover:bg-orange-600 transition-all shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 group">
-                  Lancer l'analyse <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full py-5 mt-4 bg-orange-500 text-white rounded-2xl font-black text-sm hover:bg-orange-600 transition-all shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 group disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        Envoi en cours
+                        <ChevronRight className="w-5 h-5 animate-pulse" />
+                      </>
+                    ) : (
+                      <>
+                        Lancer l'analyse
+                        <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      </>
+                    )}
                 </button>
               </form>
+              )}
             </div>
           </div>
         </div>
